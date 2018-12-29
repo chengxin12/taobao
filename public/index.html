@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <header>
+        <input type="" class="input" id="input">
+
+    </header>
+    <main>
+        <div class="box">
+            <span>全部</span>
+            <span>天猫</span>
+            <span>店铺</span>
+            <span>淘宝经验</span>
+        </div>
+        <div id="content">
+            <!-- <div class="show">
+                <img src="./img/2.jpg" alt="">
+                <p>羽绒服</p>
+            </div> -->
+        </div>
+    </main>
+</body>
+<script src="./js/ajax.js"></script>
+<script src="./js/jquery-3.3.1.js"></script>
+<script>
+    var content = document.getElementById('#content')
+    ajax({
+        url: "./js/data.json",
+        dataType: "json",
+        success: function (data) {
+            for (var i in data) {
+                var html = `
+                         <div class="show">
+                              <img src="${data[i].img}" alt="">
+                             <p>${data[i].title}</p>
+                         </div>
+                        `
+                $("#content").append(html)
+            }
+        }
+    })
+
+    var input = document.querySelector('.input')
+    input.addEventListener('input', function () {
+
+        var val = input.value;
+        ajax({
+            url: '/list',
+            type: "get",
+            data: {
+                title: val
+            },
+            dataType: "json",
+            success: function (data) {
+                for (var i in data) {
+                    $('#content').html('')
+                    var html = `
+                         <div class="show">
+                              <img src="${data[i].img}" alt="">
+                             <p>${data[i].title}</p>
+                         </div>
+                        `
+
+                    $("#content").append(html)
+                }
+
+            }
+        })
+    })
+
+
+
+
+
+
+
+
+</script>
+
+</html>
